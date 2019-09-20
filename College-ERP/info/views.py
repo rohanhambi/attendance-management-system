@@ -205,15 +205,15 @@ def t_report(request, assign_id):
 @login_required()
 def timetable(request, class_id):
     asst = AssignTime.objects.filter(assign__class_id=class_id)
-    matrix = [['' for i in range(12)] for j in range(6)]
+    matrix = [['' for i in range(8)] for j in range(6)]
 
     for i, d in enumerate(DAYS_OF_WEEK):
         t = 0
-        for j in range(12):
+        for j in range(6):
             if j == 0:
                 matrix[i][0] = d[0]
                 continue
-            if j == 4 or j == 8:
+            if j == 4 : #or j == 8:
                 continue
             try:
                 a = asst.get(period=time_slots[t][0], day=d[0])
@@ -229,10 +229,10 @@ def timetable(request, class_id):
 @login_required()
 def t_timetable(request, teacher_id):
     asst = AssignTime.objects.filter(assign__teacher_id=teacher_id)
-    class_matrix = [[True for i in range(12)] for j in range(6)]
+    class_matrix = [[True for i in range(8)] for j in range(6)]
     for i, d in enumerate(DAYS_OF_WEEK):
         t = 0
-        for j in range(12):
+        for j in range(8):
             if j == 0:
                 class_matrix[i][0] = d[0]
                 continue
@@ -244,7 +244,6 @@ def t_timetable(request, teacher_id):
             except AssignTime.DoesNotExist:
                 pass
             t += 1
-
     context = {
         'class_matrix': class_matrix,
     }
@@ -352,14 +351,3 @@ def student_marks(request, assign_id):
     ass = Assign.objects.get(id=assign_id)
     sc_list = StudentCourse.objects.filter(student__in=ass.class_id.student_set.all(), course=ass.course)
     return render(request, 'info/t_student_marks.html', {'sc_list': sc_list})
-
-
-
-
-
-
-
-
-
-
-

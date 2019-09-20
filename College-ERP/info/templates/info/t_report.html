@@ -14,7 +14,6 @@
                         <th style="width: 25%">Student USN</th>
                         <th style="width: 25%">Student Name</th>
                         <th style="width: 25%">Attendance</th>
-                        <th style="width: 25%">CIE</th>
                   </thead>
                   <tbody>
                     {% for sc in sc_list %}
@@ -26,11 +25,12 @@
                         {% else %}
                             <td class="p-3 mb-2 bg-success text-white">{{ sc.get_attendance }}</td>
                         {% endif %}
+                        <!----
                         {% if sc.get_cie < 25 %}
                             <td class="p-3 mb-2 bg-danger text-white">{{ sc.get_cie }}</td>
                         {% else %}
                             <td class="p-3 mb-2 bg-success text-white">{{ sc.get_cie }}</td>
-                        {% endif %}
+                        {% endif %}----->
                     </tr>
                     {% empty %}
                             <p>student has no courses</p>

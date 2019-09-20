@@ -26,6 +26,7 @@ SECRET_KEY = 'jy8c-n9y=pf##!2^jae-l_5iafq6q%wfq8gdb6c0r5d52su+9y'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+AUTH_EMAIL_ADDRESS = True
 
 AUTH_USER_MODEL = 'info.User'
 

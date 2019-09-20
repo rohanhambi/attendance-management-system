@@ -2,7 +2,10 @@ from django.contrib import admin
 from .models import Dept, Class, Student, Attendance, Course, Teacher, Assign, AssignTime, AttendanceClass
 from .models import AttendanceTotal, StudentCourse, Marks, MarksClass, User
 from django.contrib.auth.admin import UserAdmin
+#from import_export.admin import ImportExportModelAdmin
 # Register your models here.
+#username:ammu
+#pswd:a
 
 
 class ClassInline(admin.TabularInline):
@@ -60,6 +63,7 @@ class StudentCourseAdmin(admin.ModelAdmin):
     ordering = ('student__class_id__dept__name', 'student__class_id__id', 'student__USN')
 
 
+#@admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
     list_display = ('USN', 'name', 'class_id')
     search_fields = ('USN', 'name', 'class_id__id', 'class_id__dept__name')

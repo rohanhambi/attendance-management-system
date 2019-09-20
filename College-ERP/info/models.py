@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save, post_delete
 from datetime import timedelta, date
 
+
 # Create your models here.
 sex_choice = (
     ('Male', 'Male'),
@@ -16,7 +17,7 @@ time_slots = (
     ('9:45 - 10:45', '9:45 - 10:45'),
     ('10:45 - 11:45', '10:45 - 11:45'),
     ('12:30 - 1:30', '12:30 - 1:30'),
-    ('1:30 - 1:30', '1:30 - 2:30'),
+    ('1:30 - 2:30', '1:30 - 2:30'),
     ('2:30 - 3:30', '2:30 - 3:30'),
 )
 
@@ -104,7 +105,7 @@ class Teacher(models.Model):
     dept = models.ForeignKey(Dept, on_delete=models.CASCADE, default=1)
     name = models.CharField(max_length=100)
     sex = models.CharField(max_length=50, choices=sex_choice, default='Male')
-    DOB = models.DateField(default='1980-01-01')
+    DOB = models.DateField(default='1998-01-01')
 
     def __str__(self):
         return self.name
@@ -127,7 +128,7 @@ class Assign(models.Model):
 
 class AssignTime(models.Model):
     assign = models.ForeignKey(Assign, on_delete=models.CASCADE)
-    period = models.CharField(max_length=50, choices=time_slots, default='11:00 - 11:50')
+    period = models.CharField(max_length=50, choices=time_slots, default='8:45 - 9:45')
     day = models.CharField(max_length=15, choices=DAYS_OF_WEEK)
 
 
@@ -208,13 +209,13 @@ class StudentCourse(models.Model):
         cname = Course.objects.get(name=self.course)
         return '%s : %s' % (sname.name, cname.shortname)
 
-    def get_cie(self):
-        marks_list = self.marks_set.all()
-        m = []
-        for mk in marks_list:
-            m.append(mk.marks1)
-        cie = math.ceil(sum(m[:5])/2)
-        return cie
+   # def get_cie(self):
+    #    marks_list = self.marks_set.all()
+     #   m = []
+      #  for mk in marks_list:
+       #     m.append(mk.marks1)
+        #cie = math.ceil(sum(m[:5])/2)
+        #return cie
 
     def get_attendance(self):
         a = AttendanceTotal.objects.get(student=self.student, course=self.course)
@@ -270,8 +271,8 @@ days = {
 
 def create_attendance(sender, instance, **kwargs):
     if kwargs['created']:
-        start_date = date(2018, 8, 1)
-        end_date = date(2018, 11, 30)
+        start_date = date(2019, 7, 15)
+        end_date = date(2019, 12, 30)
         for single_date in daterange(start_date, end_date):
             if single_date.isoweekday() == days[instance.day]:
                 try:
